@@ -6,8 +6,13 @@ import { lifecycle, compose } from 'recompose'
 import { findAll } from '../../../actions/products'
 import ProductItem from './components/ProductItem'
 import BaseHero from '../../../components/BaseHero'
+import Loading from '../../../components/Loading'
 
-const ProductList = ({ products }) => {
+const ProductList = ({ products, isFetching }) => {
+  if (isFetching) {
+    return <Loading />
+  }
+
   return (
     <div className="product-list">
       <BaseHero />
@@ -25,7 +30,7 @@ const ProductList = ({ products }) => {
 
           {products &&
             products.map(product => {
-              return <ProductItem product={product} />
+              return <ProductItem key={product.id} product={product} />
             })}
         </div>
       </section>

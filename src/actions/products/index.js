@@ -7,6 +7,8 @@ const productRef = firebase.db.collection('products')
 export const FETCH_PRODUCTS = createActionSet('FETCH_PRODUCTS')
 export const FETCH_PRODUCT_DETAIL = createActionSet('FETCH_PRODUCT_DETAIL')
 export const CREATE_PRODUCT = createActionSet('CREATE_PRODUCT')
+export const UPDATE_PRODUCT = createActionSet('UPDATE_PRODUCT')
+export const DELETE_PRODUCT = createActionSet('DELETE_PRODUCT')
 
 export const findById = id => async dispatch => {
   dispatch({
@@ -71,6 +73,46 @@ export const createProduct = data => async dispatch => {
   } catch (error) {
     dispatch({
       type: CREATE_PRODUCT.FAILED,
+      error
+    })
+  }
+}
+
+export const updateProduct = (id, data) => async dispatch => {
+  dispatch({
+    type: UPDATE_PRODUCT.PENDING
+  })
+
+  try {
+    await productRef.doc(id).update(data)
+
+    dispatch({
+      type: UPDATE_PRODUCT.SUCCESS
+    })
+
+    dispatch(push('/products'))
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PRODUCT.FAILED,
+      error
+    })
+  }
+}
+
+export const deleteProduct = id => async dispatch => {
+  dispatch({
+    type: DELETE_PRODUCT.PENDING
+  })
+
+  try {
+    await productRef.doc(id).delete()
+    dispatch({
+      type: DELETE_PRODUCT.SUCCESS
+    })
+    dispatch(push('/products'))
+  } catch (error) {
+    dispatch({
+      type: DELETE_PRODUCT.FAILED,
       error
     })
   }

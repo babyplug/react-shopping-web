@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-const ProductItem = ({ product }) => {
+import { deleteProduct } from '../../../../actions/products'
+
+const ProductItem = ({ product, dispatch }) => {
   const linkToEdit = `/products/${product.id}/edit`
 
   return (
@@ -33,7 +36,14 @@ const ProductItem = ({ product }) => {
                 </p>
 
                 <p className="control">
-                  <button className="button is-danger">Delete</button>
+                  <button
+                    className="button is-danger"
+                    onClick={() => {
+                      onHandleDelete(product.id, dispatch)
+                    }}
+                  >
+                    Delete
+                  </button>
                 </p>
               </div>
             </div>
@@ -44,4 +54,10 @@ const ProductItem = ({ product }) => {
   )
 }
 
-export default ProductItem
+const onHandleDelete = (id, dispatch) => {
+  const isConfirm = window.confirm('Are you sure to delete ?')
+
+  if (isConfirm) dispatch(deleteProduct(id))
+}
+
+export default connect()(ProductItem)

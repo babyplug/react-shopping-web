@@ -4,8 +4,13 @@ import { lifecycle, compose } from 'recompose'
 
 import BaseHero from '../../../components/BaseHero'
 import { findById } from '../../../actions/products'
+import Loading from '../../../components/Loading'
 
-const ProductDetail = ({ product }) => {
+const ProductDetail = ({ product, isFetching }) => {
+  if (isFetching) {
+    return <Loading />
+  }
+
   return (
     <Fragment>
       <BaseHero />

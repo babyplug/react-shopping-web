@@ -6,7 +6,7 @@ import BaseHero from '../../../components/BaseHero'
 import { createProduct } from '../../../actions/products'
 
 const handleCreateProduct = (values, dispatch) => {
-  const payload = { ...values, coverImage: '' }
+  const payload = { ...values, coverImage: values.coverImage.imageUrl }
 
   dispatch(createProduct(payload))
 }

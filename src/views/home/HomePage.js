@@ -5,8 +5,13 @@ import BaseHero from '../../components/BaseHero'
 
 import ProductItem from './components/ProductItem'
 import { findAll } from '../../actions/products'
+import Loading from '../../components/Loading'
 
-const HomePage = ({ products }) => {
+const HomePage = ({ products, isFetching }) => {
+  if (isFetching) {
+    return <Loading />
+  }
+
   return (
     <div className="home">
       <BaseHero />
